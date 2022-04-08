@@ -52,8 +52,17 @@ namespace Services.Senders {
             if (string.IsNullOrEmpty(message)) throw new ArgumentNullException(nameof(message));
             _sender.ReceiveTimeout = timeout;
             _sender.SendTimeout = timeout;
-            _sender.Client.Send(Encoding.UTF8.GetBytes(message));
-            Thread.Sleep(50);
+            try
+            {
+                _sender.Client.Send(Encoding.UTF8.GetBytes(message));
+            }
+            catch 
+            {
+                _sender.Dispose();
+                _sender.Connect(_ipAddress,_port);
+                _sender.Client.Send(Encoding.UTF8.GetBytes(message));
+            }
+            Thread.Sleep(150);
             return ReadMessage(timeout);
         }
 
