@@ -1,10 +1,11 @@
+# ScaleCommunicationJsonRdgProtocol App Sample
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-# ScaleCommunicationJsonRdgProtocol App Sample
 Sample project showing how to connect to the scale via TCP and how to manage the database via JsonRdgProtocol.
+
 
 # Technology
 Project was written in Core .net5.0 framework.
