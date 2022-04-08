@@ -25,7 +25,6 @@ The available options are in the app:
 2. Open project in Visual Studio.
 3. Build and run.
 
-
 [contributors-shield]: https://img.shields.io/github/contributors/Radwag/ScaleCommunicationJsonProtocol.svg?style=for-the-badge
 [contributors-url]: https://github.com/Radwag/ScaleCommunicationJsonProtocol/contributors
 [forks-shield]: https://img.shields.io/github/forks/Radwag/ScaleCommunicationJsonProtocol.svg?style=for-the-badge
