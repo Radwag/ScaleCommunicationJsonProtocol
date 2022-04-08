@@ -48,9 +48,11 @@ switch (Console.ReadLine())
         {
             Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
         }
+        Console.WriteLine("\tb - Back");
 
         switch (Console.ReadLine())
         {
+            case "b": goto loop;
             case { } i:
                 try
                 {
@@ -76,9 +78,11 @@ switch (Console.ReadLine())
         {
             Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
         }
-
+        Console.WriteLine("\tb - Back");
+        
         switch (Console.ReadLine())
         {
+            case "b": goto loop;
             case { } i:
                 try
                 {
@@ -105,9 +109,11 @@ switch (Console.ReadLine())
         {
             Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
         }
+        Console.WriteLine("\tb - Back");
 
         switch (Console.ReadLine())
         {
+            case "b": goto loop;
             case { } i:
                 try
                 {
@@ -141,9 +147,11 @@ switch (Console.ReadLine())
                 Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
             }
         }
+        Console.WriteLine("\tb - Back");
 
         switch (Console.ReadLine())
         {
+            case "b": goto loop;
             case { } i:
                 try
                 {
@@ -171,9 +179,12 @@ switch (Console.ReadLine())
                 Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
             }
         }
+        Console.WriteLine("\tb - Back");
 
+        
         switch (Console.ReadLine())
         {
+            case "b": goto loop;
             case { } i:
                 try
                 {
@@ -201,9 +212,11 @@ switch (Console.ReadLine())
                 Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
             }
         }
+        Console.WriteLine("\tb - Back");
 
         switch (Console.ReadLine())
         {
+            case "b": goto loop;
             case { } i:
                 try
                 {
