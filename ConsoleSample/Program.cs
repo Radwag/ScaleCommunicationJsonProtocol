@@ -136,7 +136,7 @@ switch (Console.ReadLine())
         //List editable tables
         for (var i = 0; i < jsonRdgProtocol.Tables.Count; i++)
         {
-            if (jsonRdgProtocol.Tables[i].Alterability == 0)
+            if (jsonRdgProtocol.Tables[i].Alterability.ToString().Equals("0"))
             {
                 Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
             }
@@ -166,7 +166,7 @@ switch (Console.ReadLine())
         //List editable tables
         for (var i = 0; i < jsonRdgProtocol.Tables.Count; i++)
         {
-            if (jsonRdgProtocol.Tables[i].Alterability == 0)
+            if (jsonRdgProtocol.Tables[i].Alterability.ToString().Equals("0"))
             {
                 Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
             }
@@ -196,7 +196,7 @@ switch (Console.ReadLine())
         //List editable tables
         for (var i = 0; i < jsonRdgProtocol.Tables.Count; i++)
         {
-            if (jsonRdgProtocol.Tables[i].Alterability == 0)
+            if (jsonRdgProtocol.Tables[i].Alterability.ToString().Equals("0"))
             {
                 Console.WriteLine("\t" + i + " - " + jsonRdgProtocol.Tables[i].Name);
             }

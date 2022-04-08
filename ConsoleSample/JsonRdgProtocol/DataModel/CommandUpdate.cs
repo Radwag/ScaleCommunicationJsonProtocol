@@ -8,6 +8,7 @@ namespace ConsoleSample.JsonRdgProtocol.DataModel
     {
         private string Command = "DbUpdate";
         private string Table { get; set; }
+        private object Type { get; set; }
         private Int64 Id { get; set; }
         private List<ObjectModel> ObjectsList = new List<ObjectModel>();
 
@@ -19,6 +20,11 @@ namespace ConsoleSample.JsonRdgProtocol.DataModel
         public void SetRecordId(Int64 id)
         {
             Id = id;
+        }
+
+        public void SetType(object type)
+        {
+            Type = type;
         }
 
         public void AddObject(string dbName, object value)
@@ -40,7 +46,21 @@ namespace ConsoleSample.JsonRdgProtocol.DataModel
             query.Append(", \"Id\":" + Id);
             foreach (var objectModel in ObjectsList)
             {
-                query.Append(", \"" + objectModel.DbName + "\":\"" + objectModel.Value + "\"");
+                string value;
+                if (!Type.ToString().Equals("7") && !Type.ToString().Equals("3"))
+                {
+                    value = "\":\"" + objectModel.Value + "\"";
+                }else
+                try
+                {
+                    Convert.ToDecimal(objectModel.Value);
+                    value = "\":" + objectModel.Value;
+                }
+                catch
+                {
+                    value = "\":\"" + objectModel.Value + "\"";
+                }
+                query.Append(", \"" + objectModel.DbName + value);
             }
 
             query.Append("}");

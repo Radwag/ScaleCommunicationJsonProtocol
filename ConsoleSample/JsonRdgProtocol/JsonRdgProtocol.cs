@@ -152,21 +152,22 @@ namespace ConsoleSample.JsonRdgProtocol
             var dbInfoItem = GetDbInfo(tableName, true);
             foreach (ColumnSpecification columnSpecification in dbInfoItem.Items)
             {
-                if (columnSpecification.Alterability == 0)
+                if (columnSpecification.Alterability.ToString().Equals("0"))
                 {
                     string enumValues = string.Empty;
                     if (columnSpecification.ValuesEn != null)
                         enumValues = ", Enum values: [" + string.Join(", ", columnSpecification.ValuesEn) + "]";
-                    Console.WriteLine("Enter value (" + (TableInfoItemType) columnSpecification.Type + ") " +
+                    Console.WriteLine("Enter value (" + (TableInfoItemType) Convert.ToInt32(columnSpecification.Type.ToString()) + ") " +
                                       enumValues + " for: " + columnSpecification.Name);
                     columnSpecification.Value = (object) Console.ReadLine();
+                    commandInsert.SetType(columnSpecification.Type);
                     commandInsert.AddObject(columnSpecification.DbName, columnSpecification.Value);
                 }
             }
 
             var jsonDocument =
                 JsonDocument.Parse(RemoveCrc(SendAndReceive(CraftQuery(commandInsert.BuildQuery()), true)));
-            GetRecordById(tableName, jsonDocument.RootElement.GetProperty("Id").GetInt64());
+            GetRecordById(tableName, Convert.ToInt64(jsonDocument.RootElement.GetProperty("Id").ToString()));
         }
 
 //Update record        
@@ -194,15 +195,16 @@ namespace ConsoleSample.JsonRdgProtocol
             {
                 foreach (ColumnRecordItem columnSpecification in ColumnRecordItems)
                 {
-                    if (columnSpecification.Alterability == 0)
+                    if (columnSpecification.Alterability.ToString().Equals("0"))
                     {
                         string enumValues = string.Empty;
                         if (columnSpecification.ValuesEn != null)
                             enumValues = ", Enum values: [" + string.Join(", ", columnSpecification.ValuesEn) + "]";
-                        Console.WriteLine("Enter value (" + (TableInfoItemType) columnSpecification.Type + ") " +
+                        Console.WriteLine("Enter value (" + (TableInfoItemType) Convert.ToInt32(columnSpecification.Type.ToString()) + ") " +
                                           enumValues + " for: " + columnSpecification.Name + ",Old value: " +
                                           columnSpecification.Value);
                         columnSpecification.Value = (object) Console.ReadLine();
+                        commandUpdate.SetType(columnSpecification.Type);
                         commandUpdate.AddObject(columnSpecification.DbName, columnSpecification.Value);
                     }
                 }
@@ -210,7 +212,7 @@ namespace ConsoleSample.JsonRdgProtocol
                 commandUpdate.SetRecordId(id);
                 var jsonDocument =
                     JsonDocument.Parse(RemoveCrc(SendAndReceive(CraftQuery(commandUpdate.BuildQuery()), true)));
-                GetRecordById(tableName, jsonDocument.RootElement.GetProperty("Id").GetInt64());
+                GetRecordById(tableName, Convert.ToInt64(jsonDocument.RootElement.GetProperty("Id").ToString()));
             }
         }
 
@@ -266,7 +268,7 @@ namespace ConsoleSample.JsonRdgProtocol
                         {
                             Type = column.Type,
                             Tag = column.Tag,
-                            Value = jsonElement.RootElement.GetProperty(column.DbName).ToString(),
+                            Value = jsonElement.RootElement.GetProperty(column.DbName),
                             Values = column.Values,
                             ValuesEn = column.ValuesEn,
                             Unit = column.Unit,
@@ -407,33 +409,7 @@ namespace ConsoleSample.JsonRdgProtocol
         {
             return query + CalculateCrc(query) + "\r\n";
         }
-
-        private string? GetRecordAfterWrite(string response)
-        {
-            string? message = "ES";
-
-            if (response == "ES\r\n") return string.Empty;
-            try
-            {
-                var element = JsonDocument.Parse(response).RootElement;
-
-                var table = element.GetProperty("Table").ToString();
-                var id = element.GetProperty("Id").ToString();
-                message = Sender.SendAndWait(CraftQuery("{\"Table\":\"" + table + "\", \"Id\":" + id +
-                                                        ", \"Command\":\"DbRead\"}"));
-            }
-            catch
-            {
-                // ignored
-            }
-
-            if (message != null &&
-                (message == "ES" || message.Contains("LackOfParam") || message.Contains("RecNotExist")))
-                return "The operation has not been performed.\n";
-            Console.WriteLine("Data modified / added correctly\n");
-            return message;
-        }
-
+        
         private string GetPropertyNameAndValue<T>(Expression<Func<T>> propertyLambda)
         {
             var me = propertyLambda.Body as MemberExpression;
