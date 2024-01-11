@@ -4,7 +4,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-Sample project showing how to connect to the scale via TCP and how to manage the database via JsonRdgProtocol.
+Sample project showing how to connect to the scale via TCP on port 4001 and how to manage the database via JsonRdgProtocol.
 
 
 # Technology
